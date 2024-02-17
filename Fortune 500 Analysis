@@ -1,0 +1,15 @@
+SELECT AVG(paid_time_off_days) 
+FROM fortune_companies;
+
+SELECT company_name, healthcare_benefits, paid_time_off_days
+,CASE WHEN healthcare_benefits = 1 THEN "Yes"
+WHEN healthcare_benefits = 0 THEN "No"
+END AS "healthcare_benefits"
+FROM fortune_companies 
+WHERE paid_time_off_days >=18 AND healthcare_benefits = 1
+ORDER BY paid_time_off_days desc;
+
+SELECT industry, ROUND(AVG(avg_employee_tenure),1) AS avg_employee_tenure
+FROM fortune_companies
+GROUP BY industry
+HAVING avg_employee_tenure >= 5;
