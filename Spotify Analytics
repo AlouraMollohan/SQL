@@ -1,0 +1,51 @@
+# For this project, I downloaded Spotify data from Kaggle.
+# Then I created a table to insert Spotify data into.
+# Finally, I performed analytics on the data using SQL. 
+
+#Creating the table: 
+CREATE TABLE BIT_DB.Spotifydata (
+id integer PRIMARY KEY,
+artist_name varchar NOT NULL,
+track_name varchar NOT NULL,
+track_id varchar NOT NULL,
+popularity integer NOT NULL,
+danceability decimal(4,3) NOT NULL,
+energy decimal(4,3) NOT NULL,
+key integer NOT NULL,
+loudness decimal(5,3) NOT NULL,
+mode integer NOT NULL,
+speechiness decimal(5,4) NOT NULL,
+acousticness decimal(6,5) NOT NULL,
+instrumentalness text NOT NULL,
+liveness decimal(5,4) NOT NULL,
+valence decimal(4,3) NOT NULL,
+tempo decimal(6,3) NOT NULL,
+duration_ms integer NOT NULL,
+time_signature integer NOT NULL 
+)
+
+#Then I inserted the Spotify Data .csv into the table.
+
+#Next, I explored the data using the following SQL. 
+
+# 1. I wanted to find the average, max and min tempo.
+SELECT AVG(tempo), MAX(tempo), MIN(tempo)
+FROM BIT_DB.Spotifydata;
+
+#2 Next average max and min popularity.
+SELECT AVG(popularity), MAX(popularity), MIN(popularity)
+FROM BIT_DB.Spotifydata;
+
+#3. I compared the two to and changed the values to make the results more readable. 
+# Popularity will show as: Low, Average or High. Temo will show as: Below Average, Average or Average. 
+SELECT track_name,
+(CASE WHEN popularity < 80 then "Low"
+WHEN popularity BETWEEN 80 AND 90 THEN "Average"
+ELSE "High"
+END) AS Popularity,
+(CASE WHEN tempo BETWEEN 115 AND 130 THEN "Average"
+WHEN tempo < 115 THEN "Below Average"
+ELSE "Above Average"
+END) AS Tempo
+FROM BIT_DB.Spotifydata
+ORDER BY track_name;
